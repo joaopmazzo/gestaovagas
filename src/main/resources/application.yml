@@ -3,3 +3,6 @@ spring:
         url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/gestao_vagas}
         username: ${DATABASE_USERNAME:admin}
         password: ${DATABASE_PASSWORD:admin}
+    jpa:
+        hibernate:
+            ddl-auto: update
