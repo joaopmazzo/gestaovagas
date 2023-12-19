@@ -12,15 +12,14 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class CreateCandidateUseCase {
 
-    @Autowired
     private CandidateRepository candidateRepository;
-    
+
     public CandidateEntity execute(CandidateEntity candidateEntity) {
         candidateRepository
-            .findByUsernameOrEmail(candidateEntity.getUsername(), candidateEntity.getEmail())
-            .ifPresent((user) -> {
-                throw new UserFoundException();
-            });
+                .findByUsernameOrEmail(candidateEntity.getUsername(), candidateEntity.getEmail())
+                .ifPresent((user) -> {
+                    throw new UserFoundException();
+                });
         return candidateRepository.save(candidateEntity);
     }
 
