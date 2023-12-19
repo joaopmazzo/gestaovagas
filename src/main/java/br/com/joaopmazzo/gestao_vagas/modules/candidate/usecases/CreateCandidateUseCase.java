@@ -1,18 +1,18 @@
 package br.com.joaopmazzo.gestao_vagas.modules.candidate.usecases;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.joaopmazzo.gestao_vagas.exceptions.UserFoundException;
 import br.com.joaopmazzo.gestao_vagas.modules.candidate.CandidateEntity;
 import br.com.joaopmazzo.gestao_vagas.modules.candidate.CandidateRepository;
-import lombok.AllArgsConstructor;
 
 @Service
-@AllArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class CreateCandidateUseCase {
 
-    private CandidateRepository candidateRepository;
+    private final CandidateRepository candidateRepository;
 
     public CandidateEntity execute(CandidateEntity candidateEntity) {
         candidateRepository
