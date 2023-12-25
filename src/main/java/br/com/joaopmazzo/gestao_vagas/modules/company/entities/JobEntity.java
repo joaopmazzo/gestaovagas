@@ -3,6 +3,9 @@ package br.com.joaopmazzo.gestao_vagas.modules.company.entities;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Column;
@@ -17,8 +20,11 @@ import lombok.Data;
 
 @Entity(name = "job")
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class JobEntity {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
