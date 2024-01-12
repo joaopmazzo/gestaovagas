@@ -6,7 +6,6 @@ import br.com.joaopmazzo.gestao_vagas.modules.company.repositories.CompanyReposi
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +19,7 @@ import java.time.Instant;
 @RequiredArgsConstructor
 public class AuthCompanyUseCase {
 
-    @Value("${security.token.secret}")
+    @Value("${security.token.secret.company}")
     private String secretKey;
 
     private final CompanyRepository companyRepository;

@@ -37,7 +37,6 @@ public class CandidateEntity {
     @Email(message = "Deve conter um e-mail válido")
     private String email;
 
-    @Length(min = 6, max = 20, message = "Precisa ter um tamanho entre 6 e 20")
     private String password;
     private String description;
     private String curriculum;

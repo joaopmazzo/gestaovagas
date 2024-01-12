@@ -1,7 +1,6 @@
 package br.com.joaopmazzo.gestao_vagas.modules.company.usecases;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.joaopmazzo.gestao_vagas.modules.company.entities.JobEntity;
