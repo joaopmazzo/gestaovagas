@@ -23,13 +23,13 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> {
                     auth
                             .requestMatchers("/candidate/").permitAll()
-                            .requestMatchers("/candidate/auth").permitAll()
                             .requestMatchers("/company/").permitAll()
-                            .requestMatchers("/auth/company").permitAll()
+                            .requestMatchers("/candidate/auth").permitAll()
+                            .requestMatchers("/company/auth").permitAll()
                             .anyRequest().authenticated();
                 })
-                .addFilterBefore(securityFilter, BasicAuthenticationFilter.class)
-                .addFilterBefore(securityCandidateFilter, BasicAuthenticationFilter.class);
+                .addFilterBefore(securityCandidateFilter, BasicAuthenticationFilter.class)
+                .addFilterAfter(securityFilter, BasicAuthenticationFilter.class);
 
         return httpSecurity.build();
     }

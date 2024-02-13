@@ -28,22 +28,24 @@ public class SecurityFilter extends OncePerRequestFilter {
         SecurityContextHolder.getContext().setAuthentication(null); // serve para limpar sujeiras
         String header = request.getHeader("Authorization");
 
-        if (Objects.nonNull(header)) {
-            String subjectToken = jwtProvider.validateToken(header);
+        if (request.getRequestURI().startsWith("/company")) {
+            if (Objects.nonNull(header)) {
+                String subjectToken = jwtProvider.validateToken(header);
 
-            if (subjectToken.isEmpty()) {
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                return;
+                if (subjectToken.isEmpty()) {
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    return;
+                }
+
+                request.setAttribute("company_id", subjectToken);
+
+                // Serve para o spring sempre validar se o usuario está autenticado e se possui as roles
+                // necessárias
+                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
+                        subjectToken, null, Collections.emptyList()
+                );
+                SecurityContextHolder.getContext().setAuthentication(auth);
             }
-
-            request.setAttribute("company_id", subjectToken);
-
-            // Serve para o spring sempre validar se o usuario está autenticado e se possui as roles
-            // necessárias
-            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
-                    subjectToken, null, Collections.emptyList()
-            );
-            SecurityContextHolder.getContext().setAuthentication(auth);
         }
 
         filterChain.doFilter(request, response);
