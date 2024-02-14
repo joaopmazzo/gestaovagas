@@ -1,8 +1,8 @@
 package br.com.joaopmazzo.gestao_vagas.modules.candidate.controllers;
 
 import br.com.joaopmazzo.gestao_vagas.modules.candidate.dto.AuthCandidateRequestDTO;
-import br.com.joaopmazzo.gestao_vagas.modules.candidate.dto.AuthCandidateResponseDTO;
 import br.com.joaopmazzo.gestao_vagas.modules.candidate.usecases.AuthCandidateUseCase;
+import br.com.joaopmazzo.gestao_vagas.security.AuthResponseDTO;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ public class AuthCandidateController {
     @PostMapping("/auth")
     public ResponseEntity<Object> auth(@RequestBody AuthCandidateRequestDTO authCandidateRequestDTO) {
         try {
-            AuthCandidateResponseDTO token = authCandidateUseCase.execute(authCandidateRequestDTO);
+            AuthResponseDTO token = authCandidateUseCase.execute(authCandidateRequestDTO);
             return ResponseEntity.ok().body(token);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

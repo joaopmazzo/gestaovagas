@@ -1,6 +1,4 @@
-package br.com.joaopmazzo.gestao_vagas.modules.candidate.dto;
-
-import java.util.Date;
+package br.com.joaopmazzo.gestao_vagas.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthCandidateResponseDTO {
+public class AuthResponseDTO {
 
     private String access_token;
     private Long expires_in;

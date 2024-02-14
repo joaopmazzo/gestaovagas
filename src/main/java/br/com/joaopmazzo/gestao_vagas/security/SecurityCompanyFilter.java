@@ -1,25 +1,27 @@
 package br.com.joaopmazzo.gestao_vagas.security;
 
-import br.com.joaopmazzo.gestao_vagas.providers.JWTProvider;
+import br.com.joaopmazzo.gestao_vagas.providers.JWTCompanyProvider;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
-public class SecurityFilter extends OncePerRequestFilter {
+public class SecurityCompanyFilter extends OncePerRequestFilter {
 
-    private final JWTProvider jwtProvider;
+    private final JWTCompanyProvider jwtCompanyProvider;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -29,20 +31,24 @@ public class SecurityFilter extends OncePerRequestFilter {
         String header = request.getHeader("Authorization");
 
         if (request.getRequestURI().startsWith("/company") && Objects.nonNull(header)) {
+            DecodedJWT subjectToken = jwtCompanyProvider.validateToken(header);
 
-            String subjectToken = jwtProvider.validateToken(header);
-
-            if (subjectToken.isEmpty()) {
+            if (Objects.isNull(subjectToken)) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 return;
             }
 
-            request.setAttribute("company_id", subjectToken);
+            request.setAttribute("company_id", subjectToken.getSubject());
+
+            List<String> roles = subjectToken.getClaim("roles").asList(String.class);
+            List<SimpleGrantedAuthority> authorities = roles.stream()
+                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()))
+                    .toList();
 
             // Serve para o spring sempre validar se o usuario está autenticado e se possui as roles
             // necessárias
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
-                    subjectToken, null, Collections.emptyList()
+                    subjectToken.getSubject(), null, authorities
             );
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
