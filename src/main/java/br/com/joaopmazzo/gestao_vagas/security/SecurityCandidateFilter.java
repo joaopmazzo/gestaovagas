@@ -42,7 +42,7 @@ public class SecurityCandidateFilter extends OncePerRequestFilter {
 
             List<String> roles = subjectToken.getClaim("roles").asList(String.class);
             List<SimpleGrantedAuthority> authorities = roles.stream()
-                    .map(role -> new SimpleGrantedAuthority("ROLE" + role.toUpperCase()))
+                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()))
                     .toList();
 
             // Serve para o spring sempre validar se o usuario está autenticado e se possui as roles
