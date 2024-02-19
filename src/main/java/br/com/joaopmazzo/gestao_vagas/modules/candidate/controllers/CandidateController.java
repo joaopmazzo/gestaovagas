@@ -2,7 +2,9 @@ package br.com.joaopmazzo.gestao_vagas.modules.candidate.controllers;
 
 import br.com.joaopmazzo.gestao_vagas.modules.candidate.CandidateEntity;
 import br.com.joaopmazzo.gestao_vagas.modules.candidate.usecases.CreateCandidateUseCase;
+import br.com.joaopmazzo.gestao_vagas.modules.candidate.usecases.ListAllJobsByFilterUseCase;
 import br.com.joaopmazzo.gestao_vagas.modules.candidate.usecases.ProfileCandidateUseCase;
+import br.com.joaopmazzo.gestao_vagas.modules.company.entities.JobEntity;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -19,6 +22,7 @@ public class CandidateController {
 
     private final CreateCandidateUseCase createCandidateUseCase;
     private final ProfileCandidateUseCase profileCandidateUseCase;
+    private final ListAllJobsByFilterUseCase listAllJobsByFilterUseCase;
 
     @PostMapping("/")
     public ResponseEntity<Object> create(@Valid @RequestBody CandidateEntity candidateEntity) {
@@ -37,6 +41,16 @@ public class CandidateController {
             Object candidateId = request.getAttribute("candidate_id");
             var profile = profileCandidateUseCase.execute(UUID.fromString(candidateId.toString()));
             return ResponseEntity.ok().body(profile);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/job")
+    @PreAuthorize("hasRole('CANDIDATE')")
+    public ResponseEntity<Object> findJobByDescription(@RequestParam String description) {
+        try {
+            return ResponseEntity.ok().body(listAllJobsByFilterUseCase.execute(description));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
