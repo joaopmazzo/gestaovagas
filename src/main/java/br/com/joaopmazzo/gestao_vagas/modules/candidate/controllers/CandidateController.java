@@ -5,6 +5,13 @@ import br.com.joaopmazzo.gestao_vagas.modules.candidate.usecases.CreateCandidate
 import br.com.joaopmazzo.gestao_vagas.modules.candidate.usecases.ListAllJobsByFilterUseCase;
 import br.com.joaopmazzo.gestao_vagas.modules.candidate.usecases.ProfileCandidateUseCase;
 import br.com.joaopmazzo.gestao_vagas.modules.company.entities.JobEntity;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -48,6 +55,21 @@ public class CandidateController {
 
     @GetMapping("/job")
     @PreAuthorize("hasRole('CANDIDATE')")
+    @Tag(
+            name = "Candidato",
+            description = "Informações do candidato"
+    )
+    @Operation(
+            summary = "Listagem de vagas disponíveis para o candidato",
+            description = "Essa função é responsável por listar todas as vagas disponíveis, baseadas no filtro (description)"
+    )
+    @ApiResponses(
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(array = @ArraySchema(
+                            schema = @Schema(implementation = JobEntity.class)
+                    ))
+            })
+    )
     public ResponseEntity<Object> findJobByDescription(@RequestParam String description) {
         try {
             return ResponseEntity.ok().body(listAllJobsByFilterUseCase.execute(description));
