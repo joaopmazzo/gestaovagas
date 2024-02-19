@@ -24,7 +24,7 @@ public class SwaggerConfig {
                 .schemaRequirement("jwt_auth", createSecurityScheme());
 
 //        para atribuir em todas as rotas
-        
+
 //        .addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
 //                .components(new Components().addSecuritySchemes("Bearer Authentication", createSecurityScheme()))
     }
