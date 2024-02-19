@@ -3,6 +3,7 @@ package br.com.joaopmazzo.gestao_vagas.modules.company.entities;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -28,10 +29,15 @@ public class JobEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Schema(example = "Vaga para desenvolvedor Java Junior")
     private String description;
+
+    @Schema(example = "VF, VR, Plano de Saúde")
     private String benefits;
 
     @NotBlank(message = "Esse campo é obrigatório")
+    @Schema(example = "Júnior")
     private String level;
 
     @ManyToOne()
