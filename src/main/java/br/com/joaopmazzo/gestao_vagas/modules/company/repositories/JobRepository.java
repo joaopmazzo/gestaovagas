@@ -11,6 +11,6 @@ import br.com.joaopmazzo.gestao_vagas.modules.company.entities.JobEntity;
 @Repository
 public interface JobRepository extends JpaRepository<JobEntity, UUID> {
 
-    List<JobEntity> findJobEntitiesByDescriptionContaining(String description);
+    List<JobEntity> findJobEntitiesByDescriptionContainingIgnoreCase(String description);
     
 }
