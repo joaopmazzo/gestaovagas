@@ -1,7 +1,7 @@
 package br.com.joaopmazzo.gestao_vagas.modules.candidate.usecases;
 
-import br.com.joaopmazzo.gestao_vagas.modules.candidate.CandidateEntity;
-import br.com.joaopmazzo.gestao_vagas.modules.candidate.CandidateRepository;
+import br.com.joaopmazzo.gestao_vagas.modules.candidate.entities.CandidateEntity;
+import br.com.joaopmazzo.gestao_vagas.modules.candidate.repositories.CandidateRepository;
 import br.com.joaopmazzo.gestao_vagas.modules.candidate.dto.AuthCandidateRequestDTO;
 import br.com.joaopmazzo.gestao_vagas.security.AuthResponseDTO;
 import com.auth0.jwt.JWT;

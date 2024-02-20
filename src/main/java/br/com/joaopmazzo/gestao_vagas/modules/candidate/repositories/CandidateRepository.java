@@ -1,8 +1,9 @@
-package br.com.joaopmazzo.gestao_vagas.modules.candidate;
+package br.com.joaopmazzo.gestao_vagas.modules.candidate.repositories;
 
 import java.util.Optional;
 import java.util.UUID;
 
+import br.com.joaopmazzo.gestao_vagas.modules.candidate.entities.CandidateEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

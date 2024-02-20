@@ -1,6 +1,6 @@
 package br.com.joaopmazzo.gestao_vagas.modules.candidate.mapper;
 
-import br.com.joaopmazzo.gestao_vagas.modules.candidate.CandidateEntity;
+import br.com.joaopmazzo.gestao_vagas.modules.candidate.entities.CandidateEntity;
 import br.com.joaopmazzo.gestao_vagas.modules.candidate.dto.ProfileCandidateResponseDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

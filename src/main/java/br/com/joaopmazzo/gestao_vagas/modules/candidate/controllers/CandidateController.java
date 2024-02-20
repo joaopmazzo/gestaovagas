@@ -1,6 +1,6 @@
 package br.com.joaopmazzo.gestao_vagas.modules.candidate.controllers;
 
-import br.com.joaopmazzo.gestao_vagas.modules.candidate.CandidateEntity;
+import br.com.joaopmazzo.gestao_vagas.modules.candidate.entities.CandidateEntity;
 import br.com.joaopmazzo.gestao_vagas.modules.candidate.dto.ProfileCandidateResponseDTO;
 import br.com.joaopmazzo.gestao_vagas.modules.candidate.usecases.CreateCandidateUseCase;
 import br.com.joaopmazzo.gestao_vagas.modules.candidate.usecases.ListAllJobsByFilterUseCase;
@@ -21,7 +21,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController

@@ -1,6 +1,5 @@
 package br.com.joaopmazzo.gestao_vagas.modules.candidate.controllers;
 
-import br.com.joaopmazzo.gestao_vagas.modules.candidate.CandidateEntity;
 import br.com.joaopmazzo.gestao_vagas.modules.candidate.dto.AuthCandidateRequestDTO;
 import br.com.joaopmazzo.gestao_vagas.modules.candidate.usecases.AuthCandidateUseCase;
 import br.com.joaopmazzo.gestao_vagas.security.AuthResponseDTO;
