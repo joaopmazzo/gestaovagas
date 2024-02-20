@@ -20,7 +20,7 @@ public class ApplyJobCandidateUseCase {
         candidateRepository.findById(idCandidate).orElseThrow(UserNotFoundException::new);
         jobRepository.findById(idJob).orElseThrow(JobNotFoundException::new);
 
-        
+
     }
 
 }
