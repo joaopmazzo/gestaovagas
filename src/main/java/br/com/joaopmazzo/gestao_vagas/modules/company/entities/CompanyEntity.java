@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 
@@ -18,6 +21,9 @@ import lombok.Data;
 
 @Entity(name = "company")
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class CompanyEntity {
     
     @Id

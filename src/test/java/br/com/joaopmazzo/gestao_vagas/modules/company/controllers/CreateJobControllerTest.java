@@ -1,7 +1,10 @@
 package br.com.joaopmazzo.gestao_vagas.modules.company.controllers;
 
 import br.com.joaopmazzo.gestao_vagas.modules.company.dto.CreateJobDTO;
+import br.com.joaopmazzo.gestao_vagas.modules.company.entities.CompanyEntity;
+import br.com.joaopmazzo.gestao_vagas.modules.company.repositories.CompanyRepository;
 import br.com.joaopmazzo.gestao_vagas.modules.utils.TestUtils;
+import lombok.RequiredArgsConstructor;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -21,12 +25,16 @@ import java.util.UUID;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 public class CreateJobControllerTest {
 
     private MockMvc mockMvc;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
+
+    @Autowired
+    private CompanyRepository companyRepository;
 
     @Before
     public void setup() {
@@ -38,6 +46,15 @@ public class CreateJobControllerTest {
 
     @Test
     public void should_be_able_to_create_a_new_job() throws Exception {
+        CompanyEntity companyEntity = CompanyEntity.builder()
+                .description("COMPANY_DESCRIPTION")
+                .email("EMAIL@COMPANY.COM.BR")
+                .password("123456789abc")
+                .username("COMPANY_USERNAME")
+                .name("COMPANY_NAME")
+                .build();
+        companyEntity = companyRepository.saveAndFlush(companyEntity);
+
         CreateJobDTO createJobDTO = CreateJobDTO.builder()
                 .description("DESCRIPTION_TEST")
                 .benefits("BENEFITS_TEST")
@@ -47,7 +64,7 @@ public class CreateJobControllerTest {
         ResultActions result = mockMvc
                 .perform(
                         MockMvcRequestBuilders.post("/company/job/")
-                                .header("Authorization", TestUtils.generateToken(UUID.randomUUID(), "JAVAGAS_@123#COMPANY"))
+                                .header("Authorization", TestUtils.generateToken(companyEntity.getId(), "JAVAGAS_@123#COMPANY"))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(TestUtils.objectToJSON(createJobDTO))
                 )
