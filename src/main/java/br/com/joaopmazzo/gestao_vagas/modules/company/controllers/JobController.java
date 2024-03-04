@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,17 +46,21 @@ public class JobController {
             })
     )
     @SecurityRequirement(name = "jwt_auth")
-    public JobEntity create(@Valid @RequestBody CreateJobDTO createJobDTO, HttpServletRequest request) {
-        Object companyId = request.getAttribute("company_id"); // recuperando o atributo setado no login
+    public ResponseEntity<Object> create(@Valid @RequestBody CreateJobDTO createJobDTO, HttpServletRequest request) {
+        try {
+            Object companyId = request.getAttribute("company_id"); // recuperando o atributo setado no login
 
-        JobEntity jobEntity = JobEntity.builder()
-                .benefits(createJobDTO.getBenefits())
-                .description(createJobDTO.getDescription())
-                .level(createJobDTO.getLevel())
-                .companyId(UUID.fromString(companyId.toString())) // setando na entidade que queremos salvar
-                .build();
+            JobEntity jobEntity = JobEntity.builder()
+                    .benefits(createJobDTO.getBenefits())
+                    .description(createJobDTO.getDescription())
+                    .level(createJobDTO.getLevel())
+                    .companyId(UUID.fromString(companyId.toString())) // setando na entidade que queremos salvar
+                    .build();
 
-        return createJobUseCase.execute(jobEntity);
+            return ResponseEntity.ok().body(createJobUseCase.execute(jobEntity));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
 }
