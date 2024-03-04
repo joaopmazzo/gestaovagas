@@ -1,5 +1,6 @@
 package br.com.joaopmazzo.gestao_vagas.modules.candidate.usecases;
 
+import br.com.joaopmazzo.gestao_vagas.exceptions.UserNotFoundException;
 import br.com.joaopmazzo.gestao_vagas.modules.candidate.entities.CandidateEntity;
 import br.com.joaopmazzo.gestao_vagas.modules.candidate.repositories.CandidateRepository;
 import br.com.joaopmazzo.gestao_vagas.modules.candidate.dto.ProfileCandidateResponseDTO;
@@ -20,7 +21,7 @@ public class ProfileCandidateUseCase {
     public ProfileCandidateResponseDTO execute(UUID idCandidate) {
         CandidateEntity candidate = this.candidateRepository
                 .findById(idCandidate)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(UserNotFoundException::new);
 
 
         return candidateMapper.candidateToProfileCandidateDTO(candidate);
