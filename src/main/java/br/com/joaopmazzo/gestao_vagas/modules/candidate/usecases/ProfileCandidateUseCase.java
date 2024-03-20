@@ -6,10 +6,9 @@ import br.com.joaopmazzo.gestao_vagas.modules.candidate.repositories.CandidateRe
 import br.com.joaopmazzo.gestao_vagas.modules.candidate.dto.ProfileCandidateResponseDTO;
 import br.com.joaopmazzo.gestao_vagas.modules.candidate.mapper.CandidateMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
-
 import java.util.UUID;
+
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +21,6 @@ public class ProfileCandidateUseCase {
         CandidateEntity candidate = this.candidateRepository
                 .findById(idCandidate)
                 .orElseThrow(UserNotFoundException::new);
-
 
         return candidateMapper.candidateToProfileCandidateDTO(candidate);
     }

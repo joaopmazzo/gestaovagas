@@ -1,11 +1,9 @@
 package br.com.joaopmazzo.gestao_vagas.modules.company.controllers;
 
-import br.com.joaopmazzo.gestao_vagas.exceptions.CompanyNotFoundException;
 import br.com.joaopmazzo.gestao_vagas.modules.company.dto.CreateJobDTO;
 import br.com.joaopmazzo.gestao_vagas.modules.company.entities.CompanyEntity;
 import br.com.joaopmazzo.gestao_vagas.modules.company.repositories.CompanyRepository;
 import br.com.joaopmazzo.gestao_vagas.modules.utils.TestUtils;
-import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;

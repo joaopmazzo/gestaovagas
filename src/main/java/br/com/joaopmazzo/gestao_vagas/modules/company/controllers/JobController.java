@@ -4,7 +4,6 @@ import br.com.joaopmazzo.gestao_vagas.modules.company.dto.CreateJobDTO;
 import br.com.joaopmazzo.gestao_vagas.modules.company.entities.JobEntity;
 import br.com.joaopmazzo.gestao_vagas.modules.company.usecases.CreateJobUseCase;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -28,39 +27,33 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class JobController {
 
-    private final CreateJobUseCase createJobUseCase;
+        private final CreateJobUseCase createJobUseCase;
 
-    @PostMapping("/")
-    @PreAuthorize("hasRole('COMPANY')")
-    @Tag(
-            name = "Vagas",
-            description = "Informações das vagas"
-    )
-    @Operation(
-            summary = "Cadastro de vagas",
-            description = "Essa função é responsável por cadastrar as vagas dentro da empresa"
-    )
-    @ApiResponses(
-            @ApiResponse(responseCode = "200", content = {
-                    @Content(schema = @Schema(implementation = JobEntity.class))
-            })
-    )
-    @SecurityRequirement(name = "jwt_auth")
-    public ResponseEntity<Object> create(@Valid @RequestBody CreateJobDTO createJobDTO, HttpServletRequest request) {
-        try {
-            Object companyId = request.getAttribute("company_id"); // recuperando o atributo setado no login
+        @PostMapping("/")
+        @PreAuthorize("hasRole('COMPANY')")
+        @Tag(name = "Vagas", description = "Informações das vagas")
+        @Operation(summary = "Cadastro de vagas", description = "Essa função é responsável por cadastrar as vagas dentro da empresa")
+        @ApiResponses(@ApiResponse(responseCode = "200", content = {
+                        @Content(schema = @Schema(implementation = JobEntity.class))
+        }))
+        @SecurityRequirement(name = "jwt_auth")
+        public ResponseEntity<Object> create(@Valid @RequestBody CreateJobDTO createJobDTO,
+                        HttpServletRequest request) {
+                try {
+                        Object companyId = request.getAttribute("company_id"); // recuperando o atributo setado no login
 
-            JobEntity jobEntity = JobEntity.builder()
-                    .benefits(createJobDTO.getBenefits())
-                    .description(createJobDTO.getDescription())
-                    .level(createJobDTO.getLevel())
-                    .companyId(UUID.fromString(companyId.toString())) // setando na entidade que queremos salvar
-                    .build();
+                        JobEntity jobEntity = JobEntity.builder()
+                                        .benefits(createJobDTO.getBenefits())
+                                        .description(createJobDTO.getDescription())
+                                        .level(createJobDTO.getLevel())
+                                        .companyId(UUID.fromString(companyId.toString())) // setando na entidade que
+                                                                                          // queremos salvar
+                                        .build();
 
-            return ResponseEntity.ok().body(createJobUseCase.execute(jobEntity));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+                        return ResponseEntity.ok().body(createJobUseCase.execute(jobEntity));
+                } catch (Exception e) {
+                        return ResponseEntity.badRequest().body(e.getMessage());
+                }
         }
-    }
 
 }
