@@ -1,15 +1,21 @@
-spring: 
-    datasource: 
-        url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/gestao_vagas}
-        username: ${DATABASE_USERNAME:admin}
-        password: ${DATABASE_PASSWORD:admin}
-    jpa: 
-        hibernate: 
-            ddl-auto: update
+spring:
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/gestao_vagas}
+    username: ${DATABASE_USERNAME:admin}
+    password: ${DATABASE_PASSWORD:admin}
+  jpa:
+    hibernate:
+      ddl-auto: update
 
-security: 
-    token: 
-        secret:
-            jwt: JAVAGAS_@123
-            company: JAVAGAS_@123#COMPANY
-            candidate: JAVAGAS_@123#CANDIDATE
+security:
+  token:
+    secret:
+      jwt: JAVAGAS_@123
+      company: JAVAGAS_@123#COMPANY
+      candidate: JAVAGAS_@123#CANDIDATE
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
