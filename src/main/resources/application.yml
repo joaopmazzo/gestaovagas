@@ -15,7 +15,14 @@ security:
       candidate: JAVAGAS_@123#CANDIDATE
 
 management:
+  endpoint:
+    health:
+      enabled: true
+      show-details: ALWAYS
+    metrics:
+      enabled: true
   endpoints:
+    enabled-by-default: false
     web:
       exposure:
-        include: "*"
+        include: health,metrics
