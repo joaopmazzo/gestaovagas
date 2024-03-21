@@ -1,5 +1,12 @@
 version: "3.8"
 
+networks:
+  gv-network:
+    driver: bridge
+
+volumes:
+  prometheus_data: {}
+
 services:
   postgres:
     container_name: gestao_vagas_postgres
@@ -10,6 +17,18 @@ services:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=admin
       - POSTGRES_DB=gestao_vagas
+  prometheus:
+    container_name: gestao_vagas_prometheus
+    image: prom/prometheus:latest
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    networks:
+      - gv-network
+    ports:
+      - 9090:9090
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 # docker run -d --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonarqube:9.9.0-community
 
 # sqp_1f7fe552c4f8491176fb1e3c7dd2929725f9c848
